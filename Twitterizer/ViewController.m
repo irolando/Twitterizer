@@ -28,12 +28,8 @@
 }
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    range = NSMakeRange(140, 1);
-    text = @"";
-    return YES;
+    return textView.text.length + (text.length - range.length) <= 140;
 }
-
-
 
 
 -(void)countText: (id) sender {
