@@ -10,6 +10,8 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 @end
 
 @implementation ViewController
@@ -23,6 +25,15 @@
     
 }
 
+- (IBAction)onTwitterizePressed:(id)sender {
+    NSString *enteredText = self.textView.text;
+    for (int i = 0; i < enteredText.length; i++) {
+        NSString *vowels = @"aeiou";
+        char letter = [enteredText characterAtIndex:i];
+        NSString *letterAsString = [NSString stringWithFormat:@"%@", letter];
+        
+    }
+}
 
 
 @end
