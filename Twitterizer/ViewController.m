@@ -8,9 +8,11 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@interface ViewController () <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property NSMutableString *stringNoVowels;
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
 
 
 @end
@@ -23,22 +25,23 @@
 
 - (IBAction)onTwitterizePressed:(id)sender {
     NSString *enteredText = self.textField.text;
+    
+    self.stringNoVowels = [[NSMutableString alloc] init];
+    
     for (int i = 0; i < enteredText.length; i++) {
         NSString *vowelsLowercase = @"aeiou";
         NSString *vowelsUppercase = @"AEIOU";
         char letter = [enteredText characterAtIndex: i];
         NSString *letterAsString = [NSString stringWithFormat:@"%c", letter];
         
-        NSMutableString *stringNoVowels = [[NSMutableString alloc] init];
-        
-        if (![vowelsLowercase containsString: letterAsString] || ![vowelsUppercase containsString:letterAsString]) {
-            [stringNoVowels insertString:letterAsString atIndex:i];
-            NSLog(@"%@", stringNoVowels);
-            
-        } 
-
-        
+        if ([vowelsLowercase containsString: letterAsString] || [vowelsUppercase containsString:letterAsString]) {
+            continue;
+        } else {
+            [self.stringNoVowels appendString:letterAsString];
+        }
     }
+    
+    self.textField.text = self.stringNoVowels;
 }
 
 
