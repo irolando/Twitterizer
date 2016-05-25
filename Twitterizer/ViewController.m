@@ -9,8 +9,9 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 
 @end
 
@@ -18,19 +19,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSLog(@"Success!");
-   
-    NSLog(@"Super Success!");
-    
 }
 
 - (IBAction)onTwitterizePressed:(id)sender {
-    NSString *enteredText = self.textView.text;
+    NSString *enteredText = self.textField.text;
     for (int i = 0; i < enteredText.length; i++) {
-        NSString *vowels = @"aeiou";
-        char letter = [enteredText characterAtIndex:i];
-        NSString *letterAsString = [NSString stringWithFormat:@"%@", letter];
+        NSString *vowelsLowercase = @"aeiou";
+        NSString *vowelsUppercase = @"AEIOU";
+        char letter = [enteredText characterAtIndex: i];
+        NSString *letterAsString = [NSString stringWithFormat:@"%c", letter];
+        
+        NSMutableString *stringNoVowels = [[NSMutableString alloc] init];
+        
+        if (![vowelsLowercase containsString: letterAsString] || ![vowelsUppercase containsString:letterAsString]) {
+            [stringNoVowels insertString:letterAsString atIndex:i];
+            NSLog(@"%@", stringNoVowels);
+            
+        } 
+
         
     }
 }
