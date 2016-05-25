@@ -8,13 +8,13 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITextFieldDelegate>
+@interface ViewController () <UITextViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 @property NSMutableString *stringNoVowels;
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
-
-
+@property NSString *countForLabel;
+@property NSUInteger count;
 @end
 
 @implementation ViewController
@@ -23,8 +23,27 @@
     [super viewDidLoad];
 }
 
+-(void)textViewDidChange:(UITextView *)textView{
+    [self countText:nil];
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    range = NSMakeRange(140, 1);
+    text = @"";
+    return YES;
+}
+
+
+
+
+-(void)countText: (id) sender {
+    self.count = self.textView.text.length;
+    self.countForLabel = [NSString stringWithFormat:@"%lu", (140 - self.count)];
+    self.textLabel.text = self.countForLabel;
+}
+
 - (IBAction)onTwitterizePressed:(id)sender {
-    NSString *enteredText = self.textField.text;
+    NSString *enteredText = self.textView.text;
     
     self.stringNoVowels = [[NSMutableString alloc] init];
     
@@ -40,9 +59,9 @@
             [self.stringNoVowels appendString:letterAsString];
         }
     }
+    self.textView.text = self.stringNoVowels;
     
-    self.textField.text = self.stringNoVowels;
+    [self countText:nil];
 }
-
 
 @end
